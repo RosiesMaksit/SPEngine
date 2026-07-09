@@ -1,2 +1,0 @@
-@echo off
-@powershell -NoProfile -ExecutionPolicy Bypass -Command "$OutputEncoding = [System.Text.Encoding]::GetEncoding(866); [Console]::OutputEncoding = [System.Text.Encoding]::GetEncoding(866); $msg = [char]40 + [char]1087 + [char]1091 + [char]1089 + [char]1090 + [char]1086 + [char]1081 + [char]41; Get-ChildItem src, include -Recurse | ForEach-Object { $path = $_.FullName.Replace($pwd.Path + '\', '').Replace('\', '/'); if (-not $_.PSIsContainer -and $_.Length -eq 0) { \"$path $msg\" } else { $path } }"
