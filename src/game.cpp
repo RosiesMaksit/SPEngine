@@ -1,13 +1,17 @@
 #include <game.hpp>
 #include <scene.hpp>
-#include <render.hpp>
-#include <geometry.hpp>
-#include <storage.hpp>
-#include <pad.hpp>
-#include <parser.hpp>
+#include <scenes/list.hpp>
 #include <fx.hpp>
 
-#include <scenes/list.hpp>
+#include <render.hpp>
+#include <geometry.hpp>
+
+#include <sound.hpp>
+
+#include <pad.hpp>
+
+#include <parser.hpp>
+#include <storage.hpp>
 
 #include <types.hpp>
 
@@ -19,14 +23,18 @@ bool   Game::is_fx;
 int Game::Initialize() {
     if (Render::Initialize()) return -1;
     if (Geometry::Initialize()) return -1;
-    if (Storage::Initialize()) return -1;
-    if (Pad::Initialize()) return -1;
+
     if (Parser::InitializeCD()) return -1;
+    if (Storage::Initialize()) return -1;
+
+    if (Sound::Initialize()) return -1;
+    if (Pad::Initialize()) return -1;
+
     if (Fx::Initialize()) return -1;
     Fx::SetFrame(150);
     is_fx = false;
 
-    currentScene = new MenuScene();
+    currentScene = new LoadingScene();
 
     if (currentScene->Initialize()) return -1;
 
@@ -34,6 +42,8 @@ int Game::Initialize() {
     
     Render::SetRegistry(registry);
     Geometry::SetRegistry(registry);
+
+    for(int i; i < 180; i++);
 
     return 0;
 }
