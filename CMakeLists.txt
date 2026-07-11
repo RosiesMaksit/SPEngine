@@ -14,17 +14,26 @@ project(
 psn00bsdk_add_executable(SLPS_057.31 GPREL 
 	src/main.cpp
 	src/game.cpp
-	src/render.cpp
-	src/registry.cpp
-	src/storage/storage.cpp
-	src/storage/scratchpad.cpp
+
 	src/scene.cpp
+	src/registry.cpp
+	src/scenes/LoadScene.cpp
 	src/scenes/MenuScene.cpp
 	src/scenes/test.cpp
-	src/pad.cpp
-	src/parser/cd.cpp
+	src/fx.cpp
+
+	src/render.cpp
 	src/geometry.cpp
-	src/fx.cpp)
+
+	src/sound.cpp
+	src/pad.cpp
+
+	src/storage/storage.cpp
+	src/storage/scratchpad.cpp
+
+	src/parser/cd.cpp
+
+)
 
 target_include_directories(SLPS_057.31 PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/include)
 

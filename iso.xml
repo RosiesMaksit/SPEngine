@@ -71,6 +71,8 @@
 			<!-- <file name="M.BIN" type="data" source="${PROJECT_SOURCE_DIR}/assets/result.bin" /> -->
 			
 			<file name="BALL.TIM" type="data" source="${PROJECT_SOURCE_DIR}/assets/ball.tim" />
+			<file name="LOADING" type="data" source="${PROJECT_SOURCE_DIR}/assets/Loading.tim" />
+			<file name="AUDIO.VAG" type="data" source="${PROJECT_SOURCE_DIR}/assets/audio.vag" />
 
 			<dummy sectors="1024"/>
 		</directory_tree>
