@@ -1,9 +1,11 @@
 #include <scenes/list.hpp>
 
-#include <pad.hpp>
 #include <game.hpp>
-#include <scene.hpp>
 #include <registry/registry.hpp>
+
+#include <pad.hpp>
+#include <sound.hpp>
+
 #include <parser.hpp>
 #include <storage.hpp>
 
@@ -24,6 +26,8 @@ MenuScene::~MenuScene() {
 int MenuScene::Initialize() {
     if (Scene::Initialize()) return -1;
 
+    Parser::ReadFile("AUDIO.VAG");
+
     ids[0] = registry.CreateEntity();
     ids[1] = registry.CreateEntity();
 
@@ -41,6 +45,13 @@ int MenuScene::Initialize() {
     // Стартовая инициализация цветов (первый активен, второй погашен)
     registry.colors[ids[0]] = {200, 200, 0};  // Желтый
     registry.colors[ids[1]] = {64, 64, 64};   // Серый
+
+    Parser::CheckRead(0);
+
+    uint32_t* audio = Parser::LoadFile();
+
+    uint8_t id = Sound::SetAudio(audio);
+    Sound::Play(id, 2);
 
     return 0;
 }
@@ -73,7 +84,7 @@ void MenuScene::Update() {
     // Реакция на нажатие (вход в игру или переключение)
     if (Pad::states & START) {
         if (selected_item == 0) {
-            Game::SetScene(new TestScene(), 0);
+            Game::SetScene(new MenuScene(), 0);
         } else if (selected_item == 1) {
             // Сюда можно повесить, например, возврат на какую-то другую сцену
         }
