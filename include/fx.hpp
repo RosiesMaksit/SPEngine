@@ -14,6 +14,8 @@ class Fx {
     static int countFrame;
     static int maxFrame;
     static uint8_t typeFx;
+    static uint8_t typeFxIn;
+    static uint8_t typeFxOut;
     static bool isActive;
 
     // id элементов
@@ -29,7 +31,7 @@ class Fx {
 
     public:
     // старт анимации
-    static void StartFX(Scene* ps, Scene* ns, uint8_t type);
+    static void StartFX(Scene* ps, Scene* ns, uint8_t in, uint8_t out);
     static void SetFrame(uint16_t set_frame);
 
     static int Initialize();

@@ -17,7 +17,7 @@ psn00bsdk_add_executable(SLPS_057.31 GPREL
 
 	src/scene.cpp
 	src/registry.cpp
-	src/scenes/LoadScene.cpp
+	src/scenes/LoadingScene.cpp
 	src/scenes/MenuScene.cpp
 	src/scenes/test.cpp
 	src/fx.cpp

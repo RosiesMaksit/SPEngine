@@ -20,6 +20,13 @@
 #define MAX(A, B) ((A) > (B) ? (A) : (B))
 #define MIN(A, B) ((A) < (B) ? (A) : (B))
 
+#define SWAP_ENDIAN(x) ( \
+	(((uint32_t) (x) & 0x000000ff) << 24) | \
+	(((uint32_t) (x) & 0x0000ff00) <<  8) | \
+	(((uint32_t) (x) & 0x00ff0000) >>  8) | \
+	(((uint32_t) (x) & 0xff000000) >> 24) \
+)
+
 typedef struct {
     DISPENV disp;
     DRAWENV draw;

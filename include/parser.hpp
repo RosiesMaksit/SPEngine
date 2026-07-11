@@ -1,7 +1,7 @@
 #ifndef PARSER_HPP
 #define PARSER_HPP
 
-#define SECTORS_BUFFER 50
+#define SECTORS_BUFFER 256
 
 #include <types.hpp>
 

@@ -14,6 +14,8 @@ Registry* Fx::registry;
 int       Fx::countFrame;
 int       Fx::maxFrame;
 uint8_t   Fx::typeFx;
+uint8_t   Fx::typeFxIn;
+uint8_t   Fx::typeFxOut;
 bool      Fx::isActive;
 
 uint16_t  Fx::elid[512];
@@ -38,10 +40,11 @@ void Fx::SetFrame(uint16_t set_frame) {
     maxFrame = set_frame;
 }
 
-void Fx::StartFX(Scene* ps, Scene* ns, uint8_t type) {
+void Fx::StartFX(Scene* ps, Scene* ns, uint8_t in, uint8_t out) {
     prevScene = ps;
     nextScene = ns;
-    typeFx = type;
+    typeFxIn = in;
+    typeFxOut = out;
     countFrame = 0;
     countElements = 0;
 
@@ -56,24 +59,8 @@ void Fx::StartFX(Scene* ps, Scene* ns, uint8_t type) {
 }
 
 void Fx::Update() {
-    for (;;) {
-        if (countFrame == maxFrame / 2 + 1) {
-            nextScene->Initialize();
-            Game::currentScene = nextScene;
-            registry = nextScene->GetRegistry();
-            Render::SetRegistry(registry);
-            Geometry::SetRegistry(registry);
-            countElements = 0;
-        }
-
-        if (countFrame >= maxFrame) {
-            if (prevScene) {
-                delete prevScene;
-                prevScene = nullptr;
-            }
-
-            return;
-        }
+    typeFx = typeFxIn;
+    for (;countFrame < maxFrame / 2;) {
 
         Game::currentScene->Update();
         Run[typeFx]();
@@ -83,6 +70,26 @@ void Fx::Update() {
         countFrame++;
     }
 
+    nextScene->Initialize();
+    Game::currentScene = nextScene;
+    registry = nextScene->GetRegistry();
+    Render::SetRegistry(registry);
+    Geometry::SetRegistry(registry);
+    countElements = 0;
+
+    typeFx = typeFxOut;
+    for (;countFrame < maxFrame;) {
+
+        Game::currentScene->Update();
+        Run[typeFx]();
+        Geometry::Update();
+        Render::Present();
+
+        countFrame++;
+    }
+
+    delete prevScene;
+    prevScene = nullptr;
 }
 
 
