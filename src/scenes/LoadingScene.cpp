@@ -40,7 +40,7 @@ int LoadingScene::Initialize() {
 
     if (tim.mode & 0x8) LoadImage(tim.crect, tim.caddr);
 
-    registry.textures[0] = {*tim.prect, *tim.crect, 0, 0, 1, (uint8_t)tim.mode};
+    registry.textures[0] = {*tim.prect, *tim.crect, 0, 0, 1, {128, 28} (uint8_t)tim.mode};
 
     return 0;
 }
