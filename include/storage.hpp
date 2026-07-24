@@ -17,7 +17,7 @@ class Storage {
     static uint16_t size_buffer;
     static uint16_t cursor_buffer;
 
-    static uint32_t (&scratchpad)[256]; // 1кб
+    static uint32_t (&scratchpad)[256]; // 4кб
 
     public:
 

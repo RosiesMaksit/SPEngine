@@ -30,6 +30,8 @@ typedef struct {
 
     uint16_t u_offset;
     uint16_t v_offset;
+	
+	Size size;
 
     uint8_t tpage_mode;
     uint8_t tim_mode;

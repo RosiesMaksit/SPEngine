@@ -10,6 +10,7 @@
 #include <stdlib.h>
 #include <stdint.h>
 #include <string.h>
+#include <stdio.h>
 
 #define WIDTH 320
 #define HEIGHT 240

@@ -49,7 +49,7 @@ void LoadingScene::Update() {
     fps++;
 
     if (fps > 300) {
-        Game::SetScene(new MenuScene(), 0);
+        Game::SetScene(new MenuScene(), 0, 0);
     }
     
 }

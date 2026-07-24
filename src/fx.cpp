@@ -241,7 +241,7 @@ void Fx::ChessSwipe() {
 
         uint16_t dist = (((countElements - 1) % countX) + ((countElements - 1) / countX));
 
-        uint16_t delay = (gx + gy) * ((maxFrame / 3 * 179) >> 8) / (dist == 0 ? 1 : dist);
+        uint16_t delay = (gx + gy) * ((maxFrame / 3 * 179) >> 8) / dist;
 
         if (countFrame < maxFrame / 3) {
 

@@ -59,7 +59,7 @@ void Game::Run() {
     }
 }
 
-void Game::SetScene(Scene* newScene, uint8_t type) {
+void Game::SetScene(Scene* newScene, uint8_t intype, uint8_t outtype) {
     if (is_fx) {
         delete newScene;
         return;
@@ -68,6 +68,6 @@ void Game::SetScene(Scene* newScene, uint8_t type) {
     is_fx = true;
     nextScene = newScene;
 
-    Fx::StartFX(currentScene, nextScene, type);
+    Fx::StartFX(currentScene, nextScene, intype, outtype);
     is_fx = false;
 }

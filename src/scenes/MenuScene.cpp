@@ -84,7 +84,7 @@ void MenuScene::Update() {
     // Реакция на нажатие (вход в игру или переключение)
     if (Pad::states & START) {
         if (selected_item == 0) {
-            Game::SetScene(new TestScene(), 0);
+            Game::SetScene(new TestScene(), 0, 0);
         } else if (selected_item == 1) {
             // Сюда можно повесить, например, возврат на какую-то другую сцену
         }

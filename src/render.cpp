@@ -116,13 +116,19 @@ void Render::flip() {
             );
 
 
+            uint16_t mode = tex->tim_mode & 0x3;
+
             uint16_t u = tex->u_offset;
             uint16_t v = tex->v_offset;
+            uint16_t w = ((tex->prect.w << (2 - mode)) * (!tex->size.w)) + tex->size.w;
+            uint16_t h = (tex->prect.h * (!tex->size.h)) + tex->size.h;
+            
+            
             setUV4(poly,
-                u,                   v,
-                u + size.w,          v,
-                u,     v    +   size.h,
-                u + size.w, v + size.h
+                u,         v,
+                u + w,     v,
+                u,     v + h,
+                u + w, v + h
             );
             setClut(poly, tex->crect.x, tex->crect.y);
 

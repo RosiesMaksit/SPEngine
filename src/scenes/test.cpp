@@ -23,7 +23,7 @@ int TestScene::Initialize() {
     // 2. Инициализируем спрайт мяча
     objId = registry.CreateEntity();
     registry.positions[objId] = {100, 100, 2};
-    registry.sizes[objId] = {16, 16};
+    registry.sizes[objId] = {32, 32};
     registry.colors[objId] = {204, 204, 0};
     registry.flags[objId] |= (VISUAL | TRANS);
 
@@ -80,7 +80,7 @@ int TestScene::Initialize() {
 
     if (tim.mode & 0x8) LoadImage(tim.crect, tim.caddr);
 
-    registry.textures[objId] = {*tim.prect, *tim.crect, 0, 0, 1, (uint8_t)tim.mode};
+    registry.textures[objId] = {*tim.prect, *tim.crect, 0, 0, 1, {16, 16}, (uint8_t)tim.mode};
 
     return 0;
 }
@@ -108,7 +108,7 @@ void TestScene::Update() {
     if (Pad::states & LEFT)  cam_pos.vx -= 16;
     if (Pad::states & RIGHT) cam_pos.vx += 16;
     }
-    if (Pad::states & USE) Game::SetScene(new TestScene(), 2);
+    if (Pad::states & USE) Game::SetScene(new TestScene(), 2, 3);
 
     velocity.vx = SIGN(velocity.vx) > 0 ? MIN(velocity.vx, 32) : MAX(velocity.vx, -32);
     velocity.vy = SIGN(velocity.vy) > 0 ? MIN(velocity.vy, 32) : MAX(velocity.vy, -32);
