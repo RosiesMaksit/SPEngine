@@ -107,4 +107,10 @@ typedef struct {
 } Texture;
 ```
 
-Для создания
+Для создания объекта используется следующий паттерн:
+```cpp
+int ID = registry.CreateEntity();
+registry.positions[ID] = {0, 0, 0};
+// ... и остальные компоненты
+```
+Для удаления объекта используется команда `registry.DestroyEntity(ID);`
