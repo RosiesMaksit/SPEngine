@@ -106,6 +106,7 @@ typedef struct {
     uint8_t tim_mode;
 } Texture;
 ```
+<br> 
 
 Для создания объекта используется следующий паттерн:
 ```cpp
