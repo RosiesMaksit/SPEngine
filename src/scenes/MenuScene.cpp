@@ -26,7 +26,7 @@ MenuScene::~MenuScene() {
 int MenuScene::Initialize() {
     if (Scene::Initialize()) return -1;
 
-    Parser::ReadFile("AUDIO.VAG");
+    Parser::ReadFile("TEST.VAG");
 
     ids[0] = registry.CreateEntity();
     ids[1] = registry.CreateEntity();
@@ -51,7 +51,7 @@ int MenuScene::Initialize() {
     uint32_t* audio = Parser::LoadFile();
 
     uint8_t id = Sound::SetAudio(audio);
-    Sound::Play(id, 2);
+    Sound::Play(id);
 
     return 0;
 }

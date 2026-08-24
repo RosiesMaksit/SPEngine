@@ -120,8 +120,8 @@ void Render::flip() {
 
             uint16_t u = tex->u_offset;
             uint16_t v = tex->v_offset;
-            uint16_t w = ((tex->prect.w << (2 - mode)) * (!tex->size.w)) + tex->size.w;
-            uint16_t h = (tex->prect.h * (!tex->size.h)) + tex->size.h;
+            uint16_t w = tex->size.w;
+            uint16_t h = tex->size.h;
             
             
             setUV4(poly,

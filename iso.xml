@@ -25,10 +25,10 @@
 		-->
 		<identifiers
 			system			="PLAYSTATION"
-			volume			="SLPS00000"
-			volume_set		="SLPS00000"
+			volume			="SLPS05731"
+			volume_set		="SLPS05731"
 			publisher		="COMMUNITY GAMES"
-			data_preparer	="NAME"
+			data_preparer	="AUTHOR"
 			application		="PLAYSTATION"
 			copyright		="README.TXT;1"
 		/>
@@ -59,8 +59,8 @@
 			contain any number of files.
 		-->
 		<directory_tree>
-			<file name="SYSTEM.CNF"		type="data" source="${PROJECT_SOURCE_DIR}/system.cnf" />
-			<file name="SLPS_057.31"	type="data" source="SLPS_057.31.exe" />
+			<file name="SYSTEM.CNF"	 type="data" source="${PROJECT_SOURCE_DIR}/system.cnf" />
+			<file name="SLPS_057.31" type="data" source="SLPS_057.31.exe" />
 			<!--
 				This file is only required if you are using dynamic linking
 				(see the system/dynlink example). It contains the executable's
@@ -71,8 +71,8 @@
 			<!-- <file name="M.BIN" type="data" source="${PROJECT_SOURCE_DIR}/assets/result.bin" /> -->
 			
 			<file name="BALL.TIM" type="data" source="${PROJECT_SOURCE_DIR}/assets/ball.tim" />
-			<file name="LOADING" type="data" source="${PROJECT_SOURCE_DIR}/assets/Loading.tim" />
-			<file name="AUDIO.VAG" type="data" source="${PROJECT_SOURCE_DIR}/assets/audio.vag" />
+			<file name="LOADING"  type="data" source="${PROJECT_SOURCE_DIR}/assets/Loading.tim" />
+			<file name="TEST.VAG" type="data" source="${PROJECT_SOURCE_DIR}/assets/test.vag" />
 
 			<dummy sectors="1024"/>
 		</directory_tree>
@@ -84,5 +84,5 @@
 		or MP3 format (using WAV or FLAC is highly recommended to preserve
 		audio quality if you have a lossless copy of the source track).
 	-->
-	<!--<track type="audio" source="${PROJECT_SOURCE_DIR}/track2.wav" />-->
+	<track type="audio" source="${PROJECT_SOURCE_DIR}/assets/audio.mp3" />
 </iso_project>

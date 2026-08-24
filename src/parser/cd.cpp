@@ -7,7 +7,7 @@ CdlFILE Parser::infofile;
 int Parser::InitializeCD() {
     CdInit();
 
-    return 0;
+    return InitializeSound();
 }
 
 void Parser::ReadFile(const char* name) {

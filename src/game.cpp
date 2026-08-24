@@ -24,10 +24,11 @@ int Game::Initialize() {
     if (Render::Initialize()) return -1;
     if (Geometry::Initialize()) return -1;
 
+    if (Sound::Initialize()) return -1;
+
     if (Parser::InitializeCD()) return -1;
     if (Storage::Initialize()) return -1;
 
-    if (Sound::Initialize()) return -1;
     if (Pad::Initialize()) return -1;
 
     if (Fx::Initialize()) return -1;
@@ -42,8 +43,9 @@ int Game::Initialize() {
     
     Render::SetRegistry(registry);
     Geometry::SetRegistry(registry);
+    Geometry::SetCamera(&currentScene->cam_pos, &currentScene->cam_rot);
 
-    for(int i; i < 180; i++);
+    //for(int i; i < 180; i++);
 
     return 0;
 }
@@ -53,7 +55,7 @@ void Game::Run() {
         Pad::Update();
 
         currentScene->Update();
-        Geometry::SetCamera(currentScene->cam_pos, currentScene->cam_rot);
+        // Geometry::SetCamera(currentScene->cam_pos, currentScene->cam_rot);
         Geometry::Update();
         Render::Present();
     }

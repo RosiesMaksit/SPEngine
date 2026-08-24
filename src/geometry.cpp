@@ -5,9 +5,9 @@
 
 uint16_t Geometry  ::  polyx;
 
- MATRIX  Geometry::cameraMtx;
- VECTOR  Geometry::cameraPos;
-SVECTOR  Geometry::cameraRot;
+ MATRIX   Geometry::cameraMtx;
+ VECTOR  *Geometry::cameraPos;
+SVECTOR  *Geometry::cameraRot;
 
 Registry* Geometry::registry;
 
@@ -93,9 +93,9 @@ void Geometry::Update() {
 
 void Geometry::upd_cam() {
     VECTOR invPos;
-    invPos = {-cameraPos.vx, -cameraPos.vy, -cameraPos.vz};
+    invPos = {-cameraPos->vx, -cameraPos->vy, -cameraPos->vz};
 
-    RotMatrix(&cameraRot, &cameraMtx);
+    RotMatrix(cameraRot, &cameraMtx);
 
     ApplyMatrixLV(&cameraMtx, &invPos, &invPos);
     TransMatrix(&cameraMtx, &invPos);
@@ -113,7 +113,7 @@ void Geometry::set_matrix(VECTOR* pos, SVECTOR* rot) {
     gte_SetTransMatrix(&mtx);
 }
 
-void Geometry::SetCamera(VECTOR cam_pos, SVECTOR cam_rot) {
+void Geometry::SetCamera(VECTOR* cam_pos, SVECTOR* cam_rot) {
     cameraPos = cam_pos;
     cameraRot = cam_rot;
 }

@@ -70,11 +70,14 @@ void Fx::Update() {
         countFrame++;
     }
 
+    CdControlF(CdlPause, nullptr);
     nextScene->Initialize();
     Game::currentScene = nextScene;
     registry = nextScene->GetRegistry();
     Render::SetRegistry(registry);
     Geometry::SetRegistry(registry);
+    Geometry::SetCamera(&nextScene->cam_pos, &nextScene->cam_rot);
+
     countElements = 0;
 
     typeFx = typeFxOut;

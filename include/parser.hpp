@@ -23,7 +23,23 @@ class Parser {
     // МЕМОРИ
     static int InitializeMemoryCard();
 
+    static int CheckCard(uint8_t card);
+
+    static void Save(const char* name, uint32_t* buffer, uint16_t size, uint8_t card);
+
     // САУНД (ну типа музыка с диска чтобы оперативку не засорять)
+    static int InitializeSound();
+
+    static void Play(uint8_t num);
+    static void PlayFrom(uint8_t num, uint32_t second);
+
+    static void SetVolume(uint16_t L, uint16_t R);
+
+    static void Pause();
+    static void Resume();
+    static void Stop();
+
+    static uint8_t IsPlaying();
 
 };
 

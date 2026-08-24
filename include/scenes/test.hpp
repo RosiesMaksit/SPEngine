@@ -9,6 +9,8 @@ class TestScene : public Scene {
     int objId;
     int testId;
 
+    uint8_t onClick;
+
     public:
     TestScene();
 

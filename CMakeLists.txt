@@ -32,6 +32,7 @@ psn00bsdk_add_executable(SLPS_057.31 GPREL
 	src/storage/scratchpad.cpp
 
 	src/parser/cd.cpp
+	src/parser/sound.cpp
 
 )
 
