@@ -3,14 +3,14 @@
 (теперь пишу без нейронки)
 Фреймворк движок для разработки игр на Sony PlayStation 1 с использованием C++ версии 12.3.0
 Модули:
-Render
-Geometry
-Parser
-Storage
-Sound
-Pad
-Fx
-Registry
+<br> Render
+<br> Geometry
+<br> Parser
+<br> Storage
+<br> Sound
+<br> Pad
+<br> Fx
+<br> Registry
 
 ## ПРО ДВИЖОК
 
@@ -29,6 +29,8 @@ Registry
 
 ### СБОРКА
 Почти автономная. Первичная настройка это:
-
+* Установка PSn00bSDK как `C:\psnoobsdk`
+* В папке проекта прописать cmake --preset default
+<br>Далее для сборки проекта прописывается команда cmake --build build
 
 
