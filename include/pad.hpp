@@ -15,19 +15,16 @@ typedef enum {
     INFO     = 1 << 8,
     ITEMS    = 1 << 9,
     MODIFIER = 1 << 10,
-    UTILITY  = 1 << 11
-} States;
+    UTILITY  = 1 << 11,
 
-typedef struct {
-    PadButton key;
-    States state;
-} InputBind;
+    STATES_MAX = 12
+} States;
 
 class Pad {
     static uint8_t pad_buff[2][34];
     static PADTYPE* pad;
 
-    static InputBind bindings[12];
+    static PadButton bindings[12];
 
     public:
     static uint32_t states;
