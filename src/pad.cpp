@@ -2,7 +2,7 @@
 
 uint8_t   Pad::pad_buff[2][34];
 PADTYPE*  Pad::pad;
-InputBind Pad::bindings[12];
+PadButton Pad::bindings[12];
 uint32_t  Pad::states;
 
 int Pad::Initialize() {
@@ -10,18 +10,18 @@ int Pad::Initialize() {
     StartPAD();
     ChangeClearPAD(0);
 
-    bindings[0]  = { PAD_START,    START    };
-    bindings[1]  = { PAD_TRIANGLE, CANCEL   };
-    bindings[2]  = { PAD_LEFT,     LEFT     };
-    bindings[3]  = { PAD_RIGHT,    RIGHT    };
-    bindings[4]  = { PAD_UP,       UP       };
-    bindings[5]  = { PAD_DOWN,     DOWN     };
-    bindings[6]  = { PAD_CROSS,    USE      };
-    bindings[7]  = { PAD_CIRCLE,   ACTION   };
-    bindings[8]  = { PAD_L1,       INFO     };
-    bindings[9]  = { PAD_L2,       ITEMS    };
-    bindings[10] = { PAD_R1,       MODIFIER };
-    bindings[11] = { PAD_R2,       UTILITY  };
+    bindings[START] = PAD_START;
+    bindings[CANCEL] = PAD_TRIANGLE;
+    bindings[LEFT] = PAD_LEFT;
+    bindings[RIGHT] = PAD_RIGHT;
+    bindings[UP] = PAD_UP;
+    bindings[DOWN] = PAD_DOWN;
+    bindings[USE] = PAD_CROSS;
+    bindings[ACTION] = PAD_CIRCLE;
+    bindings[INFO] = PAD_L1;
+    bindings[ITEMS] = PAD_L2;
+    bindings[MODIFIER] = PAD_R1;
+    bindings[UTILITY] = PAD_R2;
 
     pad = (PADTYPE *)pad_buff[0];
 
@@ -30,7 +30,7 @@ int Pad::Initialize() {
 
 void Pad::Update() {
     states = 0;
-    if (!pad->stat) for (int i = 0; i < 12; i++) {
-        if (!(pad->btn & bindings[i].key)) states |= bindings[i].state;
+    if (!pad->stat) for (int i = 0, x = 0; x < STATES_MAX; i = 1 << x, x++) {
+        if (!(pad->btn & bindings[i])) states |= i;
     }
 }
