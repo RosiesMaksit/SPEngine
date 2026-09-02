@@ -192,24 +192,7 @@ registry.positions[ID] = {0, 0, 0};
 
 #### УПРАВЛЕНИЕ (Pad)
 Для этого модуля нужен `#include <pad.hpp>`
-Он позволяет узнать нажата ли определённая кнопка на геймпаде с помощью Pad::States & BUTTON (возвращает 1 если кнопка нажата).
-Имена не совпадают с названиями кнопок физического геймпада PS1, вместо этого используются следующие абстрактные названия:
-```
-	PAD_START    = START
-	PAD_TRIANGLE = CANCEL
-	PAD_LEFT     = LEFT
-	PAD_RIGHT    = RIGHT
-	PAD_UP       = UP
-	PAD_DOWN     = DOWN
-	PAD_CROSS    = USE
-	PAD_CIRCLE   = ACTION
-	PAD_L1       = INFO
-	PAD_L2       = ITEMS
-	PAD_R1       = MODIFIER
-	PAD_R2       = UTILITY
-```
-Сделано это для того, чтобы можно было динамически менять настройки управления нативно.
-Изменить управление можно простым `Pad::bindings[BUTTON] = PAD_BUTTON;`.
+> ТЕПЕРЬ абстракции кнопок нет, вместо условных `USE` пишется прямо `PAD_CROSS` и тд
 <br>ps имена pad кнопок смотреть в `psxpad.h` **библиотеки PSn00bSDK**.
 
 
