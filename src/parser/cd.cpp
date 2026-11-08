@@ -1,19 +1,31 @@
 #include <parser.hpp>
 #include <types.hpp>
 
-uint32_t Parser::buffer[SECTORS_BUFFER * 512];
+uint32_t Parser::buffer[SECTORS_BUFFER * SIZE_BUFFER_DISK];
 CdlFILE Parser::infofile;
 
 int Parser::InitializeCD() {
     CdInit();
 
-    return InitializeSound();
+    return InitializeMemoryCard();
 }
 
 void Parser::ReadFile(const char* name) {
     char buf[20] = "\\"; // 16
+    buf[1] = '\0';
+    buf[0] = '\\';
 
-    if (!CdSearchFile(&infofile, strcat(strcat(buf, name), ";1"))) return;
+    int i = 0;
+    while (name[i] != '\0' && i < 16) {
+        buf[i + 1] = name[i];
+        i++;
+    }
+    
+    // Дописываем ISO-хвост и закрываем строку
+    buf[i + 1] = ';';
+    buf[i + 2] = '1';
+    buf[i + 3] = '\0';
+    if (!CdSearchFile(&infofile, buf)) return;
 
     CdControl(CdlSetloc, &infofile.pos, __null);
 

@@ -10,10 +10,10 @@ typedef struct {
 } File;
 
 class Storage {
-    static File files[64];
+    static File files[MAX_COUNT_FILES];
     static uint64_t flags_files;
 
-    static uint32_t buffer[512];
+    static uint32_t buffer[SIZE_STORAGE_BUFFER];
     static uint16_t size_buffer;
     static uint16_t cursor_buffer;
 

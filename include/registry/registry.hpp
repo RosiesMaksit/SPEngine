@@ -3,8 +3,6 @@
 
 #include "components.hpp"
 
-#define MAX_OBJECTS 512
-
 #define COMPONENT_LIST \
     X(Position, positions) \
     X(Size, sizes) \

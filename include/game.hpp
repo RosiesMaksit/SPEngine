@@ -18,7 +18,7 @@ class Game {
 
     static void   Run();
 
-    static void   SetScene(Scene* newScene, uint8_t intype, uint8_t outtype);
+    static void   SetScene(const char* scene, uint8_t intype, uint8_t outtype);
 };
 
 #endif

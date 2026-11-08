@@ -7,8 +7,9 @@
 
 
 class Parser {
+    friend class Game;
 
-    static uint32_t buffer[SECTORS_BUFFER * 512];
+    static uint32_t buffer[SECTORS_BUFFER * SIZE_BUFFER_DISK];
     static CdlFILE infofile;
 
     public:
@@ -25,7 +26,10 @@ class Parser {
 
     static int CheckCard(uint8_t card);
 
-    static void Save(const char* name, uint32_t* buffer, uint16_t size, uint8_t card);
+    static void SaveCard(uint8_t card, const char* name, uint32_t* buffer, uint16_t size);
+    static uint32_t* LoadCard(uint8_t card, const char* name);
+
+    static void test(void);
 
     // САУНД (ну типа музыка с диска чтобы оперативку не засорять)
     static int InitializeSound();

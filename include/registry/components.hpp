@@ -5,6 +5,8 @@
 
 typedef struct {
     SVECTOR points[3]; 
+    uint16_t u;
+    uint16_t v;
 } Polygon;
 
 using Position = VECTOR;

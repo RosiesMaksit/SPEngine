@@ -74,19 +74,6 @@ void Geometry::Update() {
 
         }
     }
-
-    /* примерно так:
-    upd_camera();
-    for (objects) {
-        set_mtx();
-    }
-
-    set_mtx() {
-        for (polygons) {
-            POLY_F3* poly = &db[dbx].polys[polyx++];
-        }
-    } сделать
-    */
 }
 
 

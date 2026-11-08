@@ -13,6 +13,7 @@
 #include <stdint.h>
 #include <string.h>
 #include <stdio.h>
+#include "config.hpp"
 
 #define WIDTH 320
 #define HEIGHT 240
@@ -34,10 +35,10 @@ typedef struct {
     DISPENV disp;
     DRAWENV draw;
     uint32_t ot[LENGTH_OT];
-    POLY_F4  tiles[512];
-    DR_TPAGE dr_tpages[512];
-    POLY_FT4 tims [512];
-    POLY_F3  polys[512];
+    POLY_F4  tiles[MAX_COUNT_TILES];
+    DR_TPAGE dr_tpages[MAX_COUNT_TPAGES];
+    POLY_FT4 tims [MAX_COUNT_SPRITES];
+    POLY_F3  polys[MAX_COUNT_POLYGONS];
 } DB;
 
 enum Flags {

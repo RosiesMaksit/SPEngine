@@ -1,5 +1,4 @@
-#include <scenes/list.hpp>
-
+#include <scenes/MenuScene.hpp>
 #include <game.hpp>
 #include <registry/registry.hpp>
 
@@ -58,17 +57,17 @@ int MenuScene::Initialize() {
 
 void MenuScene::Update() {
     // Навигация
-    if (Pad::states & UP) {
+    if (Pad::states & PAD_UP) {
         if (can_navigate && selected_item > 0) {
             selected_item--;
             can_navigate = 0;
         }
-    } else if (Pad::states & DOWN) {
+    } else if (Pad::states & PAD_DOWN) {
         if (can_navigate && selected_item < 1) {
             selected_item++;
             can_navigate = 0;
         }
-    } else if (!(Pad::states & (UP | DOWN))) {
+    } else if (!(Pad::states & (PAD_UP | PAD_DOWN))) {
         can_navigate = 1; // Сброс блокировки, когда отпустили кнопки
     }
 
@@ -82,9 +81,9 @@ void MenuScene::Update() {
     }
 
     // Реакция на нажатие (вход в игру или переключение)
-    if (Pad::states & START) {
+    if (Pad::states & PAD_START) {
         if (selected_item == 0) {
-            Game::SetScene(new TestScene(), 0, 0);
+            Game::SetScene("TEST.SCN", 0, 0);
         } else if (selected_item == 1) {
             // Сюда можно повесить, например, возврат на какую-то другую сцену
         }

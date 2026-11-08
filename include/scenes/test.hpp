@@ -1,8 +1,7 @@
 #ifndef TESTSCENE
 #define TESTSCENE
 
-
-class Scene;
+#include <scene.hpp>
 
 class TestScene : public Scene {
     Position velocity;

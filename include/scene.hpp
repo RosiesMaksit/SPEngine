@@ -2,7 +2,9 @@
 #define SCENE_HPP
 
 #include <types.hpp>
-#include <registry/registry.hpp> // а без никак?
+#include <registry/registry.hpp>
+
+inline void* operator new(decltype(sizeof(0)), void* ptr) noexcept { return ptr; }
 
 class Scene {
     protected:
@@ -15,7 +17,7 @@ class Scene {
     virtual int Initialize();
     virtual void Update();
     virtual void Shutdown();
-
+    
     Registry* GetRegistry();
 
 };

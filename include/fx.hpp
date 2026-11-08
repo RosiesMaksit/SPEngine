@@ -9,6 +9,7 @@ class Registry;
 class Fx {
     static Scene* prevScene;
     static Scene* nextScene;
+    static const char* nameScene;
     static Registry* registry;
 
     static int countFrame;
@@ -19,7 +20,7 @@ class Fx {
     static bool isActive;
 
     // id элементов
-    static uint16_t elid[512];
+    static uint16_t elid[MAX_ANIMATION_ELEMENTS];
     static uint16_t countElements;
 
     // Анимации переходы
@@ -31,7 +32,7 @@ class Fx {
 
     public:
     // старт анимации
-    static void StartFX(Scene* ps, Scene* ns, uint8_t in, uint8_t out);
+    static void StartFX(Scene* ps, const char* ns, uint8_t in, uint8_t out);
     static void SetFrame(uint16_t set_frame);
 
     static int Initialize();

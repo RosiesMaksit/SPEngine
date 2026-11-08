@@ -1,9 +1,9 @@
 #include <storage.hpp>
 #include <types.hpp>
 
-  File   Storage::files[64];
+  File   Storage::files[MAX_COUNT_FILES];
 uint64_t Storage::flags_files;
-uint32_t Storage::buffer[512];
+uint32_t Storage::buffer[SIZE_STORAGE_BUFFER];
 uint16_t Storage::size_buffer;
 uint16_t Storage::cursor_buffer;
 
@@ -17,15 +17,8 @@ int Storage::Initialize() {
 }
 
 int Storage::AddFile(uint16_t size, uint32_t* data) {
-    for (int i = 0; i < 64; i++) {
-        if (flags_files & FLAG(i)) {
-            if (files[i].size == size) {
-                if (!memcmp(files[i].data, data, size)) {
-                    return i;
-                }
-            }
-            continue;
-        }
+    for (int i = 0; i < MAX_COUNT_FILES; i++) {
+        if (flags_files & FLAG(i)) continue;
         File* file = &files[i];
         uint16_t asize = (size + 3) & ~3;
         if (!asize) return -1;

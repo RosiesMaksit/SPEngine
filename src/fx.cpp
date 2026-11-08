@@ -4,22 +4,24 @@
 #include <pad.hpp>
 #include <registry/registry.hpp>
 #include <scene.hpp>
+#include <parser.hpp>
 #include <fx.hpp>
 
 
-Scene*    Fx::prevScene;
-Scene*    Fx::nextScene;
-Registry* Fx::registry;
+Scene*      Fx::prevScene;
+Scene*      Fx::nextScene;
+const char* Fx::nameScene;
+Registry*   Fx::registry;
 
-int       Fx::countFrame;
-int       Fx::maxFrame;
-uint8_t   Fx::typeFx;
-uint8_t   Fx::typeFxIn;
-uint8_t   Fx::typeFxOut;
-bool      Fx::isActive;
+int         Fx::countFrame;
+int         Fx::maxFrame;
+uint8_t     Fx::typeFx;
+uint8_t     Fx::typeFxIn;
+uint8_t     Fx::typeFxOut;
+bool        Fx::isActive;
 
-uint16_t  Fx::elid[512];
-uint16_t  Fx::countElements;
+uint16_t    Fx::elid[MAX_ANIMATION_ELEMENTS];
+uint16_t    Fx::countElements;
 
 
 int Fx::Initialize() {
@@ -40,9 +42,9 @@ void Fx::SetFrame(uint16_t set_frame) {
     maxFrame = set_frame;
 }
 
-void Fx::StartFX(Scene* ps, Scene* ns, uint8_t in, uint8_t out) {
+void Fx::StartFX(Scene* ps, const char* ns, uint8_t in, uint8_t out) {
     prevScene = ps;
-    nextScene = ns;
+    nameScene = ns;
     typeFxIn = in;
     typeFxOut = out;
     countFrame = 0;
@@ -51,10 +53,6 @@ void Fx::StartFX(Scene* ps, Scene* ns, uint8_t in, uint8_t out) {
     registry = prevScene->GetRegistry();
 
     Update();
-
-    for (uint16_t i = 0; i < countElements; i++) {
-        registry->DestroyEntity(elid[i]);
-    }
 
 }
 
@@ -71,7 +69,35 @@ void Fx::Update() {
     }
 
     CdControlF(CdlPause, nullptr);
+    for (uint16_t i = 0; i < countElements; i++) {
+        registry->DestroyEntity(elid[i]);
+    }
+    countElements = 0;
+    prevScene = nullptr;
+
+    Parser::ReadFile(nameScene);
+    Parser::CheckRead(0);
+    uint32_t* buffer_scn = Parser::LoadFile();
+    uint16_t size_scn = Parser::GetSizeFile();
+
+    uint32_t* target_ram_address = (uint32_t*)0x800C0000;
+    memcpy(target_ram_address, buffer_scn, size_scn);
+    FlushCache();
+
+    typedef Scene* (*StartOverlayFunc)(void*, uint32_t);
+    StartOverlayFunc startScene = (StartOverlayFunc)0x800C0000;
+
+    uint32_t current_engine_gp;
+    __asm__ __volatile__("move %0, $gp" : "=r"(current_engine_gp));
+
+    uint32_t code_size_aligned = (size_scn + 3) & ~3;
+    void* object_ram_alloc = (void*)(0x800C0000 + code_size_aligned);
+
+    // Прыгаем в оверлей
+    nextScene = startScene(object_ram_alloc, current_engine_gp);
+
     nextScene->Initialize();
+
     Game::currentScene = nextScene;
     registry = nextScene->GetRegistry();
     Render::SetRegistry(registry);
@@ -90,9 +116,11 @@ void Fx::Update() {
 
         countFrame++;
     }
-
-    delete prevScene;
-    prevScene = nullptr;
+    
+    for (uint16_t i = 0; i < countElements; i++) {
+        registry->DestroyEntity(elid[i]);
+    }
+    countElements = 0;
 }
 
 
@@ -135,6 +163,16 @@ void Fx::Fade() {
 
 
 void Fx::Swipe() {
+    if (!countElements) {
+        elid[countElements] = registry->CreateEntity();
+        registry->positions[elid[countElements]] = {-WIDTH, 0, 1};
+        registry->sizes[elid[countElements]] = {WIDTH, HEIGHT};
+        registry->colors[elid[countElements]] = {0, 0, 0};
+        registry->flags[elid[countElements]] |= (VISUAL | PRIMITIVE | COLOR);
+        countElements++;
+    }
+    Position* pos = &registry->positions[countElements-1];
+    pos->vx++; // мне лень
 
 }
 

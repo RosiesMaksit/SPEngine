@@ -69,7 +69,11 @@
 			-->
 			<!--<file name="TEMPLATE.MAP"	type="data" source="template.map" />-->
 			<!-- <file name="M.BIN" type="data" source="${PROJECT_SOURCE_DIR}/assets/result.bin" /> -->
-			
+
+			<file name="LOADING.SCN" type="data" source="LoadingScene.SCN" />
+			<file name="MENU.SCN"    type="data" source="MenuScene.SCN" />
+			<file name="TEST.SCN"    type="data" source="test.SCN" /> <!-- name file from src .cpp -->
+
 			<file name="BALL.TIM" type="data" source="${PROJECT_SOURCE_DIR}/assets/ball.tim" />
 			<file name="LOADING"  type="data" source="${PROJECT_SOURCE_DIR}/assets/Loading.tim" />
 			<file name="TEST.VAG" type="data" source="${PROJECT_SOURCE_DIR}/assets/test.vag" />

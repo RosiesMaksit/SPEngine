@@ -1,4 +1,4 @@
-#include <scenes/list.hpp>
+#include <scenes/test.hpp>
 
 #include <pad.hpp>
 #include <game.hpp>
@@ -6,7 +6,6 @@
 #include <registry/registry.hpp>
 #include <parser.hpp>
 #include <storage.hpp>
-
 
 TestScene::TestScene() : Scene() {
     cam_pos.vx = 0;
@@ -84,7 +83,6 @@ int TestScene::Initialize() {
     registry.textures[objId] = {*tim.prect, *tim.crect, 0, 0, {16, 16}, 1, (uint8_t)tim.mode};
 
     Parser::Play(2);
-
     return 0;
 }
 
@@ -99,28 +97,28 @@ void TestScene::Update() {
 
     Position* pos = &registry.positions[objId];
 
-    if (Pad::states & START) {
+    if (Pad::states & PAD_START) {
 
-    if (Pad::states & UP)    velocity.vy -= 16;
-    if (Pad::states & DOWN)  velocity.vy += 16;
-    if (Pad::states & LEFT)  velocity.vx -= 16;
-    if (Pad::states & RIGHT) velocity.vx += 16;
+    if (Pad::states & PAD_UP)    velocity.vy -= 16;
+    if (Pad::states & PAD_DOWN)  velocity.vy += 16;
+    if (Pad::states & PAD_LEFT)  velocity.vx -= 16;
+    if (Pad::states & PAD_RIGHT) velocity.vx += 16;
     } else {
-    if (Pad::states & UP)    cam_pos.vy -= 16;
-    if (Pad::states & DOWN)  cam_pos.vy += 16;
-    if (Pad::states & LEFT)  cam_pos.vx -= 16;
-    if (Pad::states & RIGHT) cam_pos.vx += 16;
+    if (Pad::states & PAD_UP)    cam_pos.vy -= 16;
+    if (Pad::states & PAD_DOWN)  cam_pos.vy += 16;
+    if (Pad::states & PAD_LEFT)  cam_pos.vx -= 16;
+    if (Pad::states & PAD_RIGHT) cam_pos.vx += 16;
     }
-    if (Pad::states & MODIFIER) Game::SetScene(new TestScene(), 2, 3);
-    if (Pad::states & USE && onClick) {
+    if (Pad::states & PAD_R1) Game::SetScene("TEST.SCN", 2, 3);
+    if (Pad::states & PAD_CROSS && onClick) {
         Parser::Pause();
         onClick = 0;
     }
-    if (Pad::states & ACTION && onClick) {
+    if (Pad::states & PAD_CIRCLE && onClick) {
         Parser::Resume();
         onClick = 0;
     }
-    if (!(Pad::states & USE) && !(Pad::states & ACTION)) onClick = 1;
+    if (!(Pad::states & PAD_CROSS) && !(Pad::states & PAD_CIRCLE)) onClick = 1;
 
     if (!Parser::IsPlaying()) Parser::Play(2);
 

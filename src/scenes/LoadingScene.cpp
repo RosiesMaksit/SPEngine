@@ -1,4 +1,4 @@
-#include <scenes/list.hpp>
+#include <scenes/LoadingScene.hpp>
 
 #include <pad.hpp>
 #include <game.hpp>
@@ -6,16 +6,13 @@
 #include <parser.hpp>
 #include <storage.hpp>
 
-
 LoadingScene::LoadingScene() : Scene() {}
 
 
 int LoadingScene::Initialize() {
     if (Scene::Initialize()) return -1;
-
     Parser::ReadFile("LOADING");
     fps = 0;
-
     registry.CreateEntity();
     registry.CreateEntity();
 
@@ -28,8 +25,7 @@ int LoadingScene::Initialize() {
     registry.colors[1] = {0, 0, 0};
     registry.flags[1] |= (VISUAL | PRIMITIVE | COLOR);
 
-
-    Parser::CheckRead(0); 
+    Parser::CheckRead(0);
 
     uint32_t* load = Parser::LoadFile();
     TIM_IMAGE tim;
@@ -40,7 +36,7 @@ int LoadingScene::Initialize() {
 
     if (tim.mode & 0x8) LoadImage(tim.crect, tim.caddr);
 
-    registry.textures[0] = {*tim.prect, *tim.crect, 0, 0, 1, (uint8_t)tim.mode};
+    registry.textures[0] = {*tim.prect, *tim.crect, 0, 0, {128, 28}, (uint8_t)tim.mode};
 
     return 0;
 }
@@ -49,7 +45,24 @@ void LoadingScene::Update() {
     fps++;
 
     if (fps > 300) {
-        Game::SetScene(new MenuScene(), 0, 0);
+        Game::SetScene("MENU.SCN", 0, 0);
     }
     
 }
+/* сцены грузятся динамический как оверлеи, потому SetScene принимает текстом вместо new NameMenu()
+и для этого тебе НЕ надо писать код уровня:
+extern "C" {
+    __attribute__((section(".text.start_scene_init"), noinline)) 
+    Scene* start_scene_init(void* ram_buffer, uint32_t engine_gp) {
+        __asm__ __volatile__(
+            "move $gp, %0" 
+            : 
+            : "r"(engine_gp) 
+            : "memory"
+        );
+
+        return ::new (ram_buffer) LoadingScene();
+    }
+}
+    ты можешь на это вообще забить, вот те инит, вот те апдейт, требовать от тебя я (engine developer) ничего не буду
+*/

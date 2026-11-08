@@ -25,8 +25,8 @@ class Pad {
     static PADTYPE* pad;
 
     public:
-    static PadButton bindings[12];
-    static uint32_t states;
+    static PadButton bindings[STATES_MAX];
+    static uint16_t states;
 
     static int Initialize();
     static void Update();

@@ -1,10 +1,10 @@
-#include <psxspu.h>
 #include <sound.hpp>
 #include <parser.hpp>
 #include <types.hpp>
 
-  VAG    Sound::audios[256];
+  VAG    Sound::audios[MAX_COUNT_AUDIO];
 uint8_t  Sound::audiox;
+uint8_t  Sound::map_priorities[24];
 
 int Sound::Initialize() {
     SpuInit();
@@ -15,7 +15,7 @@ int Sound::Initialize() {
 
     audiox = 0;
     audios[0].data = 0x1010;
-    for (int i = 0; 0 < 24; map_priorities[i++] = 0);
+    for (int i = 0; i < 24; map_priorities[i++] = 0);
 
     return 0;
 }
@@ -28,18 +28,17 @@ uint8_t Sound::Load(const char* name) {
 }
 
 uint8_t Sound::SetAudio(uint32_t* data) {
-    VAG* audio = &audios[audiox++];
+    VAG* audio = &audios[audiox++]; // ЗАПОЛОНИЛИ первый адрес
 
     audio->size = (SWAP_ENDIAN(data[3]) + 63) & 0xffffffc0;
     audio->rate = SWAP_ENDIAN(data[4]);
-
+    
     SpuSetTransferStartAddr(audio->data);
-    // тут вызвался audiox
 
     SpuWrite(data + 12, audio->size);
     SpuIsTransferCompleted(SPU_TRANSFER_WAIT);
 
-    audios[audiox].data = audio->data + audio->size;
+    audios[audiox].data = audio->data + audio->size; // ГОВОРИМ где начинается второй адрес
 
     audio->volL = 0x3fff;
     audio->volR = 0x3fff;
@@ -53,8 +52,8 @@ uint8_t Sound::SetAudio(uint32_t* data) {
 
 
 void Sound::SetVolume(uint8_t id, uint16_t L, uint16_t R) {
-    audios[id].volL = 0x3fff;
-    audios[id].volR = 0x3fff;
+    audios[id].volL = L>>2;
+    audios[id].volR = R>>2;
 }
 
 void Sound::SetPitch(uint8_t id, int16_t pitch) {
@@ -105,19 +104,21 @@ void Sound::Play(uint8_t id) {
             }
         }
 
-        if (audio.priority > min_priority) {
+        if (audio.priority >= min_priority) {
             channel = min_channel;
             map_priorities[channel] = audio.priority;
 
             if (channel < 16) {
-                SPU_KEY_OFF1 = (1U << channel);
+                SPU_KEY_OFF1 = (1U << channel); // (*((volatile uint16_t *) (0xbf800000 | 0x1d8c)))
             } else {
                 SPU_KEY_OFF2 = (1U << (channel - 16));
             }
         }
     }
 
-    if (channel == 24) return;
+    if (channel == 24) {
+        return;
+    }
 
     SpuSetKey(0, (uint32_t)FLAG(channel));
 

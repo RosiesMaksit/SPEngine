@@ -1,6 +1,8 @@
 #ifndef SOUND_HPP
 #define SOUND_HPP
 
+#include <types.hpp>
+
 typedef struct {
     uint32_t data;
     uint16_t size;
@@ -14,7 +16,7 @@ typedef struct {
 } VAG;
 
 class Sound {
-    static VAG audios[256];
+    static VAG audios[MAX_COUNT_AUDIO];
     static uint8_t audiox;
     static uint8_t map_priorities[24];
 
