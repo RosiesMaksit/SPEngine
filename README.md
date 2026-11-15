@@ -98,6 +98,7 @@ class NAMEScene : public Scene {
 
     int  Initialize() override;
     void Update()     override;
+	void Shutdown()   override;
     // обязательные функции
 };
 
